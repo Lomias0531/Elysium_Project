@@ -56,18 +56,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\Form1.cs">
+    <Compile Include="Forms\GameScene.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\GameScene.Designer.cs">
+      <DependentUpon>GameScene.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StartUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StartUp.Designer.cs">
+      <DependentUpon>StartUp.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\DataManager.cs" />
     <Compile Include="Scripts\Singletion.cs" />
-    <EmbeddedResource Include="Forms\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Scripts\Tools.cs" />
+    <EmbeddedResource Include="Forms\GameScene.resx">
+      <DependentUpon>GameScene.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StartUp.resx">
+      <DependentUpon>StartUp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
