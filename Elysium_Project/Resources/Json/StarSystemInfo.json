@@ -1,0 +1,18 @@
+{
+  "starSystems": [
+    {
+      "systemType": "Example System",
+      "systemType2": "示例星系",
+      "Planet_Num_Min": "0",
+      "Planet_Num_Max": "10",
+      "Star_Type": "Ordinary Star"
+    },
+    {
+      "systemType": "Ordinary System",
+      "systemType2": "标准恒星系",
+      "Planet_Num_Min": "0",
+      "Planet_Num_Max": "15",
+      "Star_Type": "Ordinary Star"
+    }
+  ]
+}

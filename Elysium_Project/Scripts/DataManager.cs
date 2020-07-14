@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using System.Windows.Forms;
 
 namespace Elysium_Project.Scripts
 {
@@ -19,9 +20,9 @@ namespace Elysium_Project.Scripts
     }
     public class Sector
     {
-        public int x;
-        public int y;
-        public string name;
+        public int x { get; set; }
+        public int y { get; set; }
+        public string name { get; set; }
         public Sector()
         {
 
@@ -29,8 +30,8 @@ namespace Elysium_Project.Scripts
     }
     public class Planet
     {
-        public int distance;
-        public int arcSpeed;
+        public int distance { get; set; }
+        public int arcSpeed { get; set; }
         public string name;
         public List<Sector> sectors;
         public Planet()
@@ -40,9 +41,15 @@ namespace Elysium_Project.Scripts
     }
     public class Star_System
     {
-        public int x;
-        public int y;
-        public string name;
+        public int x { get; set; }
+        public int y { get; set; }
+        public string name { get; set; }
+        [JsonProperty]
+        public string systemType { get; set; }
+        public string systemType2 { get; set; }
+        public int Planet_Num_Min { get; set; }
+        public int Planet_Num_Max { get; set; }
+        public string Star_Type;
         public List<Planet> planets;
         public Star_System()
         {
@@ -58,7 +65,7 @@ namespace Elysium_Project.Scripts
             int systemNum = new Random().Next(30, 40);
             for(int i = 0;i<systemNum;i++)
             {
-                Star_System sys = new Star_System();
+                Star_System sys = Tools.instance().DeSerialize<Star_System>(Tools.instance().Get_Json_Path("StarSystemInfo.json"));
                 sys.name = Tools.instance().GetRandomName(4, 8);
                 starSystems.Add(sys);
             }

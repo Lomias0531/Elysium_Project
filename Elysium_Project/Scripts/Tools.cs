@@ -1,13 +1,17 @@
 ﻿using System;
+using System.IO;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Elysium_Project.Scripts
 {
     class Tools:Singletion<Tools>
     {
+        public readonly string JsonPath = Application.ExecutablePath;
         readonly Random Rnd = new Random();
         #region 字母表
         private enum Chart
@@ -85,6 +89,34 @@ namespace Elysium_Project.Scripts
                 }
             }
             return Name;
+        }
+        public void Serialize<T>(T obj,string filepath,string filename)
+        {
+            string json = JsonConvert.SerializeObject(obj);
+            if (!Directory.Exists(filepath))
+            {
+                Directory.CreateDirectory(filepath);
+            }
+            File.WriteAllText(filepath + filename, json);
+        }
+        public T DeSerialize<T>(string filename)
+        {
+            T obj = default(T);
+            if (File.Exists(filename))
+            {
+                string json = File.ReadAllText(filename);
+                obj = (T)JsonConvert.DeserializeObject(json, typeof(T));
+            }
+
+            return obj;
+        }
+        public string Get_Json_Path(string filename)
+        {
+            string path;
+            path = Application.ExecutablePath.Replace("bin\\Debug\\", "");
+            path = path.Replace("Elysium_Project.exe", "");
+            path += "Resources\\Json\\" + filename;
+            return path;
         }
     }
 }
