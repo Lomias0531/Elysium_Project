@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Newtonsoft.Json;
+using LitJson;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -110,13 +111,38 @@ namespace Elysium_Project.Scripts
 
             return obj;
         }
-        public string Get_Json_Path(string filename)
+        private string Get_Json_Path(string filename)
         {
             string path;
             path = Application.ExecutablePath.Replace("bin\\Debug\\", "");
             path = path.Replace("Elysium_Project.exe", "");
             path += "Resources\\Json\\" + filename;
             return path;
+        }
+        private string Get_Save_Path(string filename)
+        {
+            string path;
+            path = Application.ExecutablePath.Replace("bin\\Debug\\", "");
+            path = path.Replace("Elysium_Project.exe", "");
+            path += "Save\\" + filename;
+            return path;
+        }
+        public T ReadJson<T>(string filename)
+        {
+            T obj = System.Activator.CreateInstance<T>();
+            Type t = typeof(T);
+            string _file = Get_Json_Path(filename);
+            if(File.Exists(_file))
+            {
+                switch(t.Name)
+                {
+                    case "Star_System":
+                        {
+                            break;
+                        }
+                }
+            }
+            return obj;
         }
     }
 }
