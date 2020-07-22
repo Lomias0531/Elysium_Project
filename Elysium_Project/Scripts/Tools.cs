@@ -134,10 +134,14 @@ namespace Elysium_Project.Scripts
             string _file = Get_Json_Path(filename);
             if(File.Exists(_file))
             {
-                switch(t.Name)
+                StreamReader SR = new StreamReader(Get_Json_Path(filename));
+                string JR = SR.ReadToEnd();
+                SR.Close();
+                switch (t.Name)
                 {
                     case "Star_System":
                         {
+                            obj = JsonMapper.ToObject<T>(JR);
                             break;
                         }
                 }
