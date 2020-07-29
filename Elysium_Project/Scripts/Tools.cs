@@ -1,12 +1,14 @@
 ﻿using System;
 using System.IO;
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
 using LitJson;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.Common;
+using System.Runtime.InteropServices;
 
 namespace Elysium_Project.Scripts
 {
@@ -91,26 +93,26 @@ namespace Elysium_Project.Scripts
             }
             return Name;
         }
-        public void Serialize<T>(T obj,string filepath,string filename)
-        {
-            string json = JsonConvert.SerializeObject(obj);
-            if (!Directory.Exists(filepath))
-            {
-                Directory.CreateDirectory(filepath);
-            }
-            File.WriteAllText(filepath + filename, json);
-        }
-        public T DeSerialize<T>(string filename)
-        {
-            T obj = default(T);
-            if (File.Exists(filename))
-            {
-                string json = File.ReadAllText(filename);
-                obj = (T)JsonConvert.DeserializeObject(json, typeof(T));
-            }
+        //public void Serialize<T>(T obj,string filepath,string filename)
+        //{
+        //    string json = JsonConvert.SerializeObject(obj);
+        //    if (!Directory.Exists(filepath))
+        //    {
+        //        Directory.CreateDirectory(filepath);
+        //    }
+        //    File.WriteAllText(filepath + filename, json);
+        //}
+        //public T DeSerialize<T>(string filename)
+        //{
+        //    T obj = default(T);
+        //    if (File.Exists(Get_Json_Path(filename)))
+        //    {
+        //        string json = File.ReadAllText(Get_Json_Path(filename));
+        //        obj = (T)JsonConvert.DeserializeObject(json, typeof(T));
+        //    }
 
-            return obj;
-        }
+        //    return obj;
+        //}
         private string Get_Json_Path(string filename)
         {
             string path;
@@ -127,20 +129,50 @@ namespace Elysium_Project.Scripts
             path += "Save\\" + filename;
             return path;
         }
-        public T ReadJson<T>(string filename)
+        public T ReadJson<T>(string filename,string target)
         {
-            T obj = System.Activator.CreateInstance<T>();
-            Type t = typeof(T);
-            string _file = Get_Json_Path(filename);
-            if(File.Exists(_file))
+            T obj = default(T);
+            if(File.Exists(Get_Json_Path(filename)))
             {
-                switch(t.Name)
+                StreamReader SR = new StreamReader(Get_Json_Path(filename));
+                string jsonstr = SR.ReadToEnd();
+                SR.Close();
+
+                JsonData JD = JsonMapper.ToObject(jsonstr);
+                for(int i = 0;i<JD[0].Count;i++)
                 {
-                    case "Star_System":
-                        {
-                            break;
-                        }
+                    if(JD[0][i][0].ToString() == target)
+                    {
+                        string _jsonstr = JD[0][i].ToJson();
+                        obj = (T)(object)JsonMapper.ToObject<T>(_jsonstr);
+                    }
                 }
+
+                //switch(typeof(T).Name)
+                //{
+                //    default:
+                //        {
+                //            break;
+                //        }
+                //    case "Star_System":
+                //        {
+                //            Star_System sys = new Star_System();
+                //            for(int i =0;i<JD[0].Count;i++)
+                //            {
+                //                if(JD[0][i]["systemName"].ToString() == target)
+                //                {
+                //                    sys.systemName = JD[0][i]["systemName"].ToString();
+                //                    sys.systemType = JD[0][i]["systemType"].ToString();
+                //                    sys.Planet_Num_Max = Convert.ToInt32(JD[0][i]["Planet_Num_Max"].ToString());
+                //                    sys.Planet_Num_Min = Convert.ToInt32(JD[0][i]["Planet_Num_Min"].ToString());
+                //                    sys.Star_Type = JD[0][i]["Star_Type"].ToString();
+                //                    break;
+                //                }
+                //            }
+                //            obj = (T)(object)sys;
+                //            break;
+                //        }
+                //}
             }
             return obj;
         }

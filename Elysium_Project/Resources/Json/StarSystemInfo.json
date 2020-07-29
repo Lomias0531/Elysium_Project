@@ -1,5 +1,5 @@
 {
-  "starSystems": [
+  "Star_System": [
     {
       "systemName": "Example System",
       "systemType": "示例星系",
@@ -13,6 +13,13 @@
       "Planet_Num_Min": "0",
       "Planet_Num_Max": "15",
       "Star_Type": "Ordinary Star"
+    },
+    {
+      "systemName": "Black Hole",
+      "systemType": "黑洞",
+      "Planet_Num_Min": "0",
+      "Planet_Num_Max": "1",
+      "Star_Type": "Black Hole"
     }
   ]
 }

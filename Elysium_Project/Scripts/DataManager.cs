@@ -53,7 +53,7 @@ namespace Elysium_Project.Scripts
         public string systemType { get; set; }
         public int Planet_Num_Min { get; set; }
         public int Planet_Num_Max { get; set; }
-        public string Star_Type;
+        public string Star_Type { get; set; }
         public List<Planet> planets;
         public void init()
         {
@@ -69,8 +69,8 @@ namespace Elysium_Project.Scripts
             int systemNum = new Random().Next(30, 40);
             for(int i = 0;i<systemNum;i++)
             {
-                //Star_System sys = Tools.instance().DeSerialize<Star_System>(Tools.instance().Get_Json_Path("StarSystemInfo.json"));
-                Star_System sys = Tools.instance().ReadJson<Star_System>("StarSystemInfo.json");
+                //Star_System sys = Tools.instance().DeSerialize<Star_System>("StarSystemInfo.json");
+                Star_System sys = Tools.instance().ReadJson<Star_System>("StarSystemInfo.json","Ordinary System");
                 sys.name = Tools.instance().GetRandomName(4, 8);
                 starSystems.Add(sys);
             }
