@@ -1,4 +1,5 @@
 ﻿using Elysium_Project.Forms;
+using Elysium_Project.Scripts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,6 +22,7 @@ namespace Elysium_Project
         private void start_Btn(object sender, EventArgs e)
         {
             GameScene game = new GameScene();
+            Tools.instance().init();
             this.Hide();
             game.ShowDialog();
             this.Close();
