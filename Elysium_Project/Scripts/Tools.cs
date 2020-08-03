@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-//using Newtonsoft.Json;
+using Newtonsoft.Json;
 using LitJson;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +14,11 @@ namespace Elysium_Project.Scripts
 {
     class Tools:Singletion<Tools>
     {
+        public override void init()
+        {
+            base.init();
+            AddExtend();
+        }
         public readonly string JsonPath = Application.ExecutablePath;
         readonly Random Rnd = new Random();
         #region 字母表
@@ -34,6 +39,12 @@ namespace Elysium_Project.Scripts
             b, c, d, f, g, h, j, k, l, m, n, p, q, r, s, t, v, w, x, y, z
         }
         #endregion
+        public static void AddExtend()
+        {
+            JsonMapper.RegisterImporter<uint, Int64>((uint value) => { return (Int64)value; });
+            JsonMapper.RegisterImporter<int, long>((int value) => { return (long)value; });
+            JsonMapper.RegisterImporter<string, int>((string value) => { return Convert.ToInt32(value); });
+        }
         public string GetRandomName(int min_length,int max_length)
         {
             int Length = Rnd.Next(min_length, max_length);
@@ -93,26 +104,26 @@ namespace Elysium_Project.Scripts
             }
             return Name;
         }
-        //public void Serialize<T>(T obj,string filepath,string filename)
-        //{
-        //    string json = JsonConvert.SerializeObject(obj);
-        //    if (!Directory.Exists(filepath))
-        //    {
-        //        Directory.CreateDirectory(filepath);
-        //    }
-        //    File.WriteAllText(filepath + filename, json);
-        //}
-        //public T DeSerialize<T>(string filename)
-        //{
-        //    T obj = default(T);
-        //    if (File.Exists(Get_Json_Path(filename)))
-        //    {
-        //        string json = File.ReadAllText(Get_Json_Path(filename));
-        //        obj = (T)JsonConvert.DeserializeObject(json, typeof(T));
-        //    }
+        public void Serialize<T>(T obj, string filepath, string filename)
+        {
+            string json = JsonConvert.SerializeObject(obj);
+            if (!Directory.Exists(filepath))
+            {
+                Directory.CreateDirectory(filepath);
+            }
+            File.WriteAllText(filepath + filename, json);
+        }
+        public T DeSerialize<T>(string filename)
+        {
+            T obj = default(T);
+            if (File.Exists(Get_Json_Path(filename)))
+            {
+                string json = File.ReadAllText(Get_Json_Path(filename));
+                obj = (T)JsonConvert.DeserializeObject(json, typeof(T));
+            }
 
-        //    return obj;
-        //}
+            return obj;
+        }
         private string Get_Json_Path(string filename)
         {
             string path;
