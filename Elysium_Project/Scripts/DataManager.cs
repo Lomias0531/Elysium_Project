@@ -37,10 +37,22 @@ namespace Elysium_Project.Scripts
         public int distance { get; set; }
         public int arcSpeed { get; set; }
         public string name;
+        [JsonProperty]
+        public string PlanetName { get; set; }
+        public string PlanetType { get; set; }
+        public int Sector_Num_Min { get; set; }
+        public int Sector_Num_Max { get; set; }
         public List<Sector> sectors;
         public void init()
         {
             sectors = new List<Sector>();
+            int num = Tools.Rnd.Next(Sector_Num_Min, Sector_Num_Max);
+            for(int i = 0;i<num;i++)
+            {
+                Sector sec = Tools.instance().ReadJson<Sector>("SectorInfo.json", "Plains");
+                sec.name = Tools.instance().GetRandomName(4, 8);
+                sectors.Add(sec);
+            }
         }
     }
     public class Star_System
@@ -58,10 +70,17 @@ namespace Elysium_Project.Scripts
         public void init()
         {
             planets = new List<Planet>();
+            int num = Tools.Rnd.Next(Planet_Num_Min, Planet_Num_Max);
+            for(int i = 0;i<num;i++)
+            {
+                Planet pln = Tools.instance().ReadJson<Planet>("PlanetsInfo.json", "Ordinary System");
+                pln.name = Tools.instance().GetRandomName(4, 8);
+                planets.Add(pln);
+            }
         }
     }
     public class Galaxy_Map
-    {
+    { 
         public List<Star_System> starSystems;
         public Galaxy_Map()
         {

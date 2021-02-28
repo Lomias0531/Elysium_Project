@@ -20,7 +20,7 @@ namespace Elysium_Project.Scripts
             AddExtend();
         }
         public readonly string JsonPath = Application.ExecutablePath;
-        readonly Random Rnd = new Random();
+        public readonly static Random Rnd = new Random();
         #region 字母表
         private enum Chart
         {
